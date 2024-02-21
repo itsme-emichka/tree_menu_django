@@ -11,23 +11,16 @@ register = Library()
 def create_layer(
         current_layer_sections: list[Section],
         current_section: Section,
-        current_children: dict[str: Section, str: list]
-        ) -> list[Section, list[Section, list]]:
+        current_children: list[dict[str: Section, str: list]]
+        ) -> list[dict[str: Section, str: list]]:
     layer = []
     for current_layer_section in current_layer_sections:
         if current_layer_section == current_section:
-            layer.append(
-                {
-                    'section': current_layer_section,
-                    'section_children': current_children
-                }
-            )
+            layer.append({
+                'section': current_layer_section,
+                'section_children': current_children})
         else:
-            layer.append(
-                {
-                    'section': current_layer_section
-                }
-            )
+            layer.append({'section': current_layer_section})
     return layer
 
 
@@ -43,7 +36,7 @@ def menu_generator(
         current_children: dict[str: Section, str: list],
         parent_sections: list[Section],
         children_of_sections: dict[Section, list[Section]]
-        ) -> list[Section, list[Section, list]]:
+        ) -> list[dict[str: Section, str: list]]:
     parent_id = current_section.parent_id
     if not parent_id:
         return create_layer(
@@ -55,11 +48,11 @@ def menu_generator(
         current_children=current_children
     )
     return menu_generator(
-        all_sections,
-        get_section(parent_id, all_sections),
-        menu_layer,
-        parent_sections,
-        children_of_sections
+        all_sections=all_sections,
+        current_section=get_section(parent_id, all_sections),
+        current_children=menu_layer,
+        parent_sections=parent_sections,
+        children_of_sections=children_of_sections
     )
 
 
@@ -69,6 +62,7 @@ def draw_menu(context: RequestContext, menu_name: str) -> str:
 
     parent_sections = []
     children_of_sections = {}
+    current_section = None
 
     for section in all_sections:
         if section.url == context.request.build_absolute_uri():
@@ -81,11 +75,13 @@ def draw_menu(context: RequestContext, menu_name: str) -> str:
             else:
                 children_of_sections[section.parent_id] = [section]
 
-    current_children = [
-        {
+    if not current_section:
+        return {
+            'sections': [{'section': section} for section in parent_sections]}
+
+    current_children = [{
             'section': section
-        } for section in children_of_sections.get(current_section.id, [])
-    ]
+        } for section in children_of_sections.get(current_section.id, [])]
 
     sections = menu_generator(
         all_sections=all_sections,
@@ -94,6 +90,4 @@ def draw_menu(context: RequestContext, menu_name: str) -> str:
         parent_sections=parent_sections,
         children_of_sections=children_of_sections
     )
-
-    final = {'sections': sections}
-    return final
+    return {'sections': sections}

@@ -4,13 +4,18 @@ from homepage import views
 
 
 urlpatterns = [
-    path('in_main_1/in_1_1/in_1_1_1', views.main, name='in_1_1_1'),
-    path('in_main_1/in_1_1/in_1_1_2', views.main, name='in_1_1_2'),
-    path('in_main_1/in_1_1', views.main, name='in_1_1'),
-    path('in_main_1/in_1_2', views.main, name='in_1_2'),
-    path('in_main_2/in_2_1', views.main, name='in_2_1'),
-    path('in_main_2/in_2_2', views.main, name='in_2_2'),
-    path('in_main_1', views.main, name='in_main_1',),
-    path('in_main_2', views.main, name='in_main_2',),
+    path('main1/1page1/1sub1/', views.main),
+    path('main1/1page1/1sub2/', views.main),
+    path('main1/1page1/', views.main),
+    path('main1/1page2/2sub1/', views.main),
+    path('main1/1page2/2sub2/', views.main),
+    path('main1/1page2/', views.main),
+    path('main1/', views.main),
+    path('main2/2page1/', views.main),
+    path('main2/2page2/', views.main),
+    path('main2/', views.main),
+    path('main3/', views.main),
+    path('side1/', views.main),
+    path('side2/', views.main),
     path('', views.main)
 ]
