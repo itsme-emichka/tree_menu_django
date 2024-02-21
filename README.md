@@ -14,7 +14,7 @@
 ### Автор
 **Имя:** Эмилар Локтев  
 **Почта:** emilar-l@yandex.ru  
-**Telegram** @itsme_emichka  
+**Telegram:** @itsme_emichka  
 ### Как запустить проект
 1. Клонировать репозиторий:  
    `git clone https://github.com/itsme-emichka/tree_menu_django.git`  
