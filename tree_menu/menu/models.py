@@ -7,6 +7,9 @@ class Menu(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    class Meta:
+        ordering = ('title',)
+
 
 class Section(models.Model):
     menu = models.ForeignKey(
@@ -26,3 +29,6 @@ class Section(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    class Meta:
+        ordering = ('title',)
