@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <ul>
+  {% for item in sections %}
+    <li>
+      <a href={{ item.section.url }}>{{ item.section.title }}</a>
+      {% if item.section_children %}
+        {% include "menu/menu.html" with sections=item.section_children %}
+      {% endif %}
+    </li>
+  {% endfor %}
+  </ul>
+</html>
